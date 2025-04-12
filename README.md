@@ -1,14 +1,45 @@
-A webcam-based proctoring tool that uses computer vision to detect cheating or inattentive behavior in real-time.
+# Real-Time Cheating Detection Using Eye Gaze
 
-✅ Key Features
-Face Detection – Alerts if face is not visible.
+This project is a webcam-based cheating detection system built in Python. It uses face visibility, eye movement, and blink patterns to monitor student attention during online exams.
+Firstly,for setting up the environment ,I personally used conda
+conda create -n cheatdetect python=3.9
+conda activate cheatdetect
+Then I installed the required dependencies by using pip install opencv-python mediapipe numpy
+The main dependencies are:
+OpenCV
+Mediapipe
+NumPy
+How to Run
+Ensure your webcam is connected and working.
 
-Gaze Tracking – Detects if user looks away from screen.
+Run the main script:
 
-Rapid Glance Detection – Flags frequent left-right eye movements.
+bash
+Copy code
+python main.py
+A webcam window will open showing your gaze direction, blink count, and attention score.
 
-Blink Detection – Monitors blinking using eye aspect ratio (EAR).
+Press q to quit the stream.
 
-Attention Scoring – Dynamic score (0–100) based on user focus.
+Logs of suspicious behavior are saved to alert_log.txt.
+Detection Strategy
+This system combines multiple visual cues to monitor potential cheating behavior:
 
-Alert Logging – All events logged to alert_log.txt.
+1. Face Visibility Detection
+If the face is not visible for more than 3 seconds, it logs an alert and reduces the attention score.
+
+2. Gaze Direction Detection
+If the user looks away (left/right) for more than 3 seconds, it logs a distraction alert.
+
+Rapid side glances (6+ within 10 seconds) are flagged as suspicious.
+
+3. Blink Detection
+Uses Eye Aspect Ratio (EAR) to detect blinks.
+
+Sudden blinking patterns can be useful in future enhancements (e.g., detecting drowsiness or signaling).
+
+4. Attention Scoring System
+Starts at 100 and decreases based on alerts.
+
+Helpful in summarizing the test-taker's overall attentiveness.
+
